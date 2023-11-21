@@ -1,5 +1,5 @@
 import { Character } from '../js/Character';
-import { Magician } from '../js/Magican';
+import { Magician } from '../js/Magician';
 import { Daemon } from '../js/Daemon';
 
 test('Должен выдать ошибку, если указано неверное имя', () => {
@@ -33,4 +33,39 @@ test('Расчет атаки для Daemon', () => {
 test('Расчет атаки для Magician', () => {
   const magician = new Magician('Sergey', 4);
   expect(magician.attack).toBe(7);
+});
+
+test('Сеттер stoned должен корректно устанавливать значение', () => {
+  const magician = new Magician('Alexey', 3);
+  magician.stoned = true;
+  expect(magician.stoned).toBe(true);
+  magician.stoned = false;
+  expect(magician.stoned).toBe(false);
+});
+
+test('Сеттер attack не должен изменять значение, если stoned установлен в false', () => {
+  const magician = new Magician('Semen', 3);
+  magician.stoned = false;
+  magician.attack = 15;
+  expect(magician.attack).not.toBe(15);
+});
+
+test('Сеттер attack не должен изменять значение, если stoned установлен в true', () => {
+  const magician = new Magician('Roman', 3);
+  magician.stoned = true;
+  magician.attack = 15;
+  expect(magician.attack).not.toBe(15);
+});
+
+test('Изменение расстояния должно влиять на атаку без эффекта "stoned"', () => {
+  const magician = new Magician('Nikita', 3);
+  magician.distance = 5;
+  expect(magician.attack).toBe(6);
+});
+
+test('Изменение расстояния должно влиять на атаку с эффектом "stoned"', () => {
+  const magician = new Magician('Andrey', 3);
+  magician.stoned = true;
+  magician.distance = 5;
+  expect(magician.attack).toBe(0);
 });
