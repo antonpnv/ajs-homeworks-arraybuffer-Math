@@ -31,6 +31,17 @@ export class Character {
     const distanceEffect = 100 - (this.distance - 1) * 10;
     const attackWithoutStoned = Math.round((distanceEffect * this.baseAttack) / 100);
 
-    return this.stoned ? Math.round(attackWithoutStoned - Math.log2(this.distance) * 5) : attackWithoutStoned;
+    if (this.stoned) {
+      const stonedAttack = Math.round(attackWithoutStoned - Math.log2(this.distance) * 5);
+      return stonedAttack >= 0 ? stonedAttack : 0;
+    } else {
+      return attackWithoutStoned;
+    }
+  }
+
+  set attack(value) {
+    if (!this.stoned) {
+      this._attack = value;
+    }
   }
 }
