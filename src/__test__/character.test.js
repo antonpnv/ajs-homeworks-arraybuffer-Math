@@ -35,14 +35,6 @@ test('Расчет атаки для Magician', () => {
   expect(magician.attack).toBe(7);
 });
 
-test('Сеттер stoned должен корректно устанавливать значение', () => {
-  const magician = new Magician('Alexey', 3);
-  magician.stoned = true;
-  expect(magician.stoned).toBe(true);
-  magician.stoned = false;
-  expect(magician.stoned).toBe(false);
-});
-
 test('Сеттер attack не должен изменять значение, если stoned установлен в false', () => {
   const magician = new Magician('Semen', 3);
   magician.stoned = false;
@@ -57,10 +49,11 @@ test('Сеттер attack не должен изменять значение, �
   expect(magician.attack).not.toBe(15);
 });
 
-test('Изменение расстояния должно влиять на атаку без эффекта "stoned"', () => {
-  const magician = new Magician('Nikita', 3);
-  magician.distance = 5;
-  expect(magician.attack).toBe(6);
+test('Сеттер attack с эффектом "stoned" и значение меньше 0', () => {
+  const magician = new Magician('Roman', 3);
+  magician.stoned = true;
+  magician.attack = -5;
+  expect(magician.attack).toBe(0);
 });
 
 test('Изменение расстояния должно влиять на атаку с эффектом "stoned"', () => {

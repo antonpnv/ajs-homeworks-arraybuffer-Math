@@ -42,6 +42,9 @@ export class Character {
   set attack(value) {
     if (!this.stoned) {
       this._attack = value;
+    } else {
+      const stonedAttack = Math.round(value - Math.log2(this.distance) * 5);
+      this._attack = stonedAttack >= 0 ? stonedAttack : 0;
     }
   }
 }
